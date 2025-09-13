@@ -4,7 +4,7 @@ Visualizacion 3D interactiva del edificio CIT de la UVG
   Navegacion 3D - Explora los 7 pisos del CIT
   Deteccion de cliks - Identifica clicks
   Controles - Rotacion Automatica
-  Interdaz responsiva - Funciona en Desktop y movil
+  Interfaz responsiva - Funciona en Desktop y movil
 
 - Tecnologias
   Three.js
