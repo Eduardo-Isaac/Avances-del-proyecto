@@ -2,7 +2,7 @@ class BotonPiso {
     constructor(config, pisoManager) {
         this.config = config;
         this.pisoManager = pisoManager;
-        this.elemento = document.querySelector(config.selector);
+        this.elemento = document.querySelector(config.selector); // selecciona el boton en el DOM
         
         if (this.elemento) {
             this.elemento.addEventListener('click', () => this.manejarClick()); // asocia el click al boton

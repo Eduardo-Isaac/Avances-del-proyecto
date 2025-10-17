@@ -1,8 +1,8 @@
 // Clase individual para cada piso
 class Piso {
     constructor(config, scene) { // recibe la configuracion del piso y la escena de Three.js
-        this.nombre = config.nombre;
-        this.archivo = config.archivo;
+        this.nombre = config.nombre; // nombre del piso
+        this.archivo = config.archivo; 
         this.color = config.color;
         this.posicionInicial = config.posicionInicial;
         this.scene = scene;

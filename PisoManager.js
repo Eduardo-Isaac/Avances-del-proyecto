@@ -50,7 +50,7 @@ class Piso {
 
     ocultar() {
         if (this.modelo) {
-            this.modelo.position.set(0, 0, 100000); // mueve el piso fuera de la vista para ocultarlo aun no se usa
+            this.modelo.position.set(0, 0, 100000); // mueve el piso fuera de la vista para ocultarlo
         }
     }
 
@@ -96,6 +96,40 @@ class PisoManager {
             this.pisos.set(config.nombre, piso); // almacenar en el mapa de pisos
         }); // aguas con quitar esto que ya no cargan los pisos JAJAJAJA 
     }
+
+    // NUEVA FUNCIÓN: Mostrar un piso específico y ocultar los demás
+    mostrarPiso(nombrePiso) {
+        console.log(`Mostrando piso: ${nombrePiso}`);
+        
+        // Ocultar TODOS los pisos (incluyendo pisot)
+        this.pisos.forEach(piso => piso.ocultar());
+        
+        // Mostrar SOLO el piso seleccionado
+        const piso = this.pisos.get(nombrePiso);
+        if (piso && piso.estaListo()) {
+            piso.mostrar();
+            this.pisoActivo = piso; // establecer como piso activo
+            console.log(`✅ Piso ${nombrePiso} visible`);
+        } else {
+            console.warn(`Piso ${nombrePiso} no encontrado o no está listo`);
+        }
+    }
+
+    // NUEVA FUNCIÓN: Mostrar todos los pisos a la vez
+    mostrarTodosLosPisos() {
+        console.log('Mostrando todos los pisos');
+        
+        // Mostrar todos los pisos en sus posiciones iniciales
+        this.pisos.forEach((piso, nombre) => {
+            if (piso.estaListo()) {
+                piso.mostrar();
+                console.log(`${nombre} visible`);
+            }
+        });
+        
+        // Establecer piso1 como piso activo para detectar clicks
+        this.pisoActivo = this.pisos.get('piso1');
+    }
     
     obtenerPisoActivo() { // devuelve el piso activo
         return this.pisoActivo;
@@ -107,7 +141,12 @@ class PisoManager {
             this.pisos.get('piso1').posicionar(0, 0.48, 1.25);
             this.pisos.get('pisot').posicionar(0, 0.07, 0);
             this.pisos.get('piso2').posicionar(0, 0.25, 0);
+            
+            // Mostrar todos los pisos al inicio
+            this.mostrarTodosLosPisos();
+            
             this.inicializado = true;
+            console.log('todos los pisos visibles');
         }
     }
 }

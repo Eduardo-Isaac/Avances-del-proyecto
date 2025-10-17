@@ -4,7 +4,7 @@ class SistemaAnalytics { //sistema para registrar clicks en el edificios
     }
 }
 
-class InterfazUsuario {
+class InterfazUsuario { //sistema para mostrar informacion 
     constructor(edificioMapper) {
         this.edificioMapper = edificioMapper;
         //se implementará para la siguiente entrega
