@@ -1,0 +1,217 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* ==================== BARRA DE BÚSQUEDA TRANSPARENTE ==================== */
+.search-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+}
+
+#search {
+    width: 100%;
+    padding: 15px 20px;
+    padding-left: 50px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+#search:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
+}
+
+#search::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Icono de búsqueda */
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    pointer-events: none;
+}
+
+/* ==================== BOTONES TRANSPARENTES ==================== */
+.configBotones {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.configBotones button {
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de onda al hacer click */
+.configBotones button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.configBotones button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Hover en botones */
+.configBotones button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.configBotones button:active {
+    transform: translateY(0);
+}
+
+/* Estilo especial para el botón "Mostrar todos" */
+.botonp8 {
+    background: rgba(102, 126, 234, 0.3) !important;
+    border: 1px solid rgba(102, 126, 234, 0.5) !important;
+    color: white !important;
+    font-weight: 700;
+    padding: 14px 32px;
+}
+
+.botonp8:hover {
+    background: rgba(102, 126, 234, 0.5) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* ==================== ANIMACIONES ==================== */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.configBotones button {
+    animation: slideUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+/* Delay escalonado para cada botón */
+.botonp1 { animation-delay: 0.05s; }
+.botonp2 { animation-delay: 0.1s; }
+.botonp3 { animation-delay: 0.15s; }
+.botonp4 { animation-delay: 0.2s; }
+.botonp5 { animation-delay: 0.25s; }
+.botonp6 { animation-delay: 0.3s; }
+.botonp7 { animation-delay: 0.35s; }
+.botonp8 { animation-delay: 0.4s; }
+
+/* Animación de entrada para la barra de búsqueda */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.search-container {
+    animation: fadeInDown 0.6s ease;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .configBotones {
+        bottom: 10px;
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .configBotones button {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .search-container {
+        width: 95%;
+        top: 10px;
+    }
+
+    #search {
+        padding: 12px 18px;
+        padding-left: 45px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .configBotones {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .configBotones button {
+        width: 100%;
+    }
+}
