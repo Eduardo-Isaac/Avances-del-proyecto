@@ -8,9 +8,81 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
+    transition: background 0.5s ease;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #87ceeb 50%, #14a8f8ff 75%, #1e3c72 100%);
 }
 
-/* ==================== BARRA DE BÚSQUEDA TRANSPARENTE ==================== */
+/* Modo oscuro */
+body.dark-mode {
+    background: linear-gradient(135deg, #19140f 0%, #1a1d29 25%, #1a1849 50%, #1a2d65 75%, #1943a4 100%) !important;
+}
+
+/* ==================== LOADER ==================== */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #87ceeb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s;
+}
+
+#loader.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#loader-content {
+    text-align: center;
+}
+
+#loader-logo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+#loader-logo img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+#loader-text {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+#loader-bar {
+    width: 250px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#loader-progress {
+    height: 100%;
+    background: white;
+    width: 0%;
+    animation: load 2s ease-out forwards;
+}
+
+@keyframes load {
+    to { width: 100%; }
+}
+
+/* ==================== BÚSQUEDA ==================== */
 .search-container {
     position: absolute;
     top: 20px;
@@ -24,166 +96,395 @@ body {
 #search {
     width: 100%;
     padding: 15px 20px;
-    padding-left: 50px;
     font-size: 16px;
     border: none;
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(15px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     color: white;
-}
-
-#search:focus {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
-    transform: scale(1.02);
 }
 
 #search::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Icono de búsqueda */
-.search-icon {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 18px;
-    pointer-events: none;
+#search:focus {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
 }
 
-/* ==================== BOTONES TRANSPARENTES ==================== */
-.configBotones {
+body.dark-mode #search {
+    background: rgba(30, 30, 45, 0.8);
+}
+
+body.dark-mode #search:focus {
+    background: rgba(30, 30, 45, 0.95);
+}
+
+/* Resultados */
+#search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+}
+
+body.dark-mode #search-results {
+    background: rgba(30, 30, 45, 0.95);
+}
+
+.resultado-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+.resultado-item:hover {
+    background: rgba(102, 126, 234, 0.15);
+    transform: translateX(5px);
+}
+
+.resultado-nombre {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.resultado-info {
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+body.dark-mode .resultado-nombre {
+    color: #e8e8e8;
+}
+
+body.dark-mode .resultado-info {
+    color: #a0a0a0;
+}
+
+.sin-resultados {
+    padding: 20px;
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* ==================== TARJETA INFO ==================== */
+#info-card {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%) translateX(400px);
+    width: 350px;
+    max-height: 80vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 1001;
+    transition: all 0.4s;
+    display: none;
+}
+
+#info-card.visible {
+    transform: translateY(-50%) translateX(0);
+}
+
+body.dark-mode #info-card {
+    background: rgba(30, 30, 45, 0.95);
+}
+
+.info-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-mode .info-card-header {
+    background: linear-gradient(135deg, #4a2545 0%, #2d1b3d 100%);
+}
+
+.info-card-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.cerrar-card {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cerrar-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.info-card-body {
+    padding: 20px;
+    color: #2c3e50;
+    max-height: calc(80vh - 80px);
+    overflow-y: auto;
+}
+
+body.dark-mode .info-card-body {
+    color: #e8e8e8;
+}
+
+.info-card-body p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.info-card-body strong {
+    color: #667eea;
+}
+
+body.dark-mode .info-card-body strong {
+    color: #9b87f5;
+}
+
+.info-card-body ul {
+    margin: 10px 0 15px 20px;
+}
+
+.info-card-body li {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+body.dark-mode .info-card-body li {
+    color: #b0b0b0;
+}
+
+/* ==================== CONTROLES ==================== */
+#controls {
     position: absolute;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
+    align-items: flex-end;
+    gap: 20px;
+    z-index: 100;
+}
+
+/* Slider velocidad */
+#speed-control {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode #speed-control {
+    background: rgba(30, 30, 45, 0.6);
+}
+
+#speed-label {
+    color: white;
+    font-size: 6px;
+    font-weight: 600;
+    writing-mode: horizontal-tb;
+    letter-spacing: 1px;
+}
+
+#speed-slider {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    width: 6px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+#speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #838383, #ffffff);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#speed-value {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Botones pisos */
+.configBotones {
+    display: flex;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
-    z-index: 100;
     padding: 20px 30px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .configBotones {
+    background: rgba(30, 30, 45, 0.6);
 }
 
 .configBotones button {
-    padding: 12px 28px;
+    padding: 12px 24px;
     font-size: 14px;
     font-weight: 600;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s;
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
     color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
 }
 
-/* Efecto de onda al hacer click */
-.configBotones button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+body.dark-mode .configBotones button {
+    background: rgba(30, 30, 45, 0.4);
 }
 
-.configBotones button:active::before {
-    width: 300px;
-    height: 300px;
-}
-
-/* Hover en botones */
 .configBotones button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.25);
 }
 
-.configBotones button:active {
-    transform: translateY(0);
+body.dark-mode .configBotones button:hover {
+    background: rgba(30, 30, 45, 0.6);
 }
 
-/* Estilo especial para el botón "Mostrar todos" */
 .botonp8 {
     background: rgba(102, 126, 234, 0.3) !important;
     border: 1px solid rgba(102, 126, 234, 0.5) !important;
-    color: white !important;
     font-weight: 700;
-    padding: 14px 32px;
 }
 
-.botonp8:hover {
-    background: rgba(102, 126, 234, 0.5) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+body.dark-mode .botonp8 {
+    background: rgba(74, 37, 69, 0.6) !important;
 }
 
-/* ==================== ANIMACIONES ==================== */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Toggle oscuro */
+#dark-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.configBotones button {
-    animation: slideUp 0.4s ease forwards;
+body.dark-mode #dark-toggle {
+    background: rgba(30, 30, 45, 0.6);
+}
+
+#dark-label {
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+#dark-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+}
+
+#dark-switch input {
     opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-/* Delay escalonado para cada botón */
-.botonp1 { animation-delay: 0.05s; }
-.botonp2 { animation-delay: 0.1s; }
-.botonp3 { animation-delay: 0.15s; }
-.botonp4 { animation-delay: 0.2s; }
-.botonp5 { animation-delay: 0.25s; }
-.botonp6 { animation-delay: 0.3s; }
-.botonp7 { animation-delay: 0.35s; }
-.botonp8 { animation-delay: 0.4s; }
-
-/* Animación de entrada para la barra de búsqueda */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
+#dark-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.4s;
+    border-radius: 34px;
 }
 
-.search-container {
-    animation: fadeInDown 0.6s ease;
+#dark-slider:before {
+    position: absolute;
+    content: "☀️";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+input:checked + #dark-slider {
+    background: linear-gradient(135deg, #4a2545, #2d1b3d);
+}
+
+input:checked + #dark-slider:before {
+    transform: translateX(24px);
+    content: "🌙";
 }
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-    .configBotones {
+    #controls {
+        flex-direction: column;
+        gap: 10px;
         bottom: 10px;
+    }
+
+    #speed-control {
+        flex-direction: row;
+        padding: 10px 15px;
+    }
+
+    #speed-label {
+        writing-mode: horizontal-tb;
+    }
+
+    #speed-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100px;
+        height: 6px;
+    }
+
+    .configBotones {
         padding: 10px;
         gap: 5px;
     }
@@ -193,25 +494,18 @@ body {
         font-size: 12px;
     }
 
-    .search-container {
-        width: 95%;
-        top: 10px;
+    #dark-toggle {
+        flex-direction: row;
+        padding: 10px 15px;
     }
 
-    #search {
-        padding: 12px 18px;
-        padding-left: 45px;
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .configBotones {
-        flex-direction: column;
+    #info-card {
         width: 90%;
+        right: 5%;
+        transform: translateY(-50%) translateY(100vh);
     }
 
-    .configBotones button {
-        width: 100%;
+    #info-card.visible {
+        transform: translateY(-50%) translateY(0);
     }
 }
