@@ -15,4 +15,4 @@ Visualizacion 3D interactiva del edificio CIT de la UVG
 PROYECTO UNIVERSITARIO
 - Curso: CC2008 - SECCIÓN - 21 Programacion Orientada a Objetos
 - Universidad : Universidad del Valle de Guatemala
-- Entrega: 3/6 Mapeo UVG
+- Entrega: 5/6 Mapeo UVG
