@@ -1,14 +1,14 @@
 class ControlsManager {
     constructor(controls) {
         this.controls = controls;
-        this.init(); // Inicializa los controles
+        this.init();
     }
 
     init() {
         // Loader
-        const loader = document.getElementById('loader'); //loader element
-        window.addEventListener('load', () => { // Espera a que la ventana cargue
-            setTimeout(() => { // Simula tiempo de carga
+        const loader = document.getElementById('loader');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
                 loader.classList.add('hide');
                 setTimeout(() => loader.style.display = 'none', 500);
             }, 2000);
@@ -16,32 +16,32 @@ class ControlsManager {
 
         // Slider velocidad
         const slider = document.getElementById('speed-slider');
-        const value = document.getElementById('speed-value'); // Muestra el valor de velocidad
-        slider.addEventListener('input', (e) => { // Actualiza la velocidad al mover el slider
+        const value = document.getElementById('speed-value');
+        slider.addEventListener('input', (e) => {
             const speed = parseFloat(e.target.value);
-            this.controls.autoRotateSpeed = speed; // Actualiza la velocidad de rotación automática
+            this.controls.autoRotateSpeed = speed;
             value.textContent = speed.toFixed(1) + 'x';
         });
 
         // Toggle modo oscuro
-        const toggle = document.getElementById('dark-checkbox'); // Checkbox para modo oscuro
-        const saved = localStorage.getItem('darkMode'); // Recupera la preferencia guardada
+        const toggle = document.getElementById('dark-checkbox');
+        const saved = localStorage.getItem('darkMode');
         
         if (saved === 'on') {
-            document.body.classList.add('dark-mode'); // Activa el modo oscuro
+            document.body.classList.add('dark-mode');
             toggle.checked = true;
         }
 
         toggle.addEventListener('change', (e) => {
             if (e.target.checked) {
-                document.body.classList.add('dark-mode'); // Activa el modo oscuro
-                localStorage.setItem('darkMode', 'on'); // Guarda la preferencia
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'on');
             } else {
-                document.body.classList.remove('dark-mode'); // Desactiva el modo oscuro
-                localStorage.setItem('darkMode', 'off'); // Guarda la preferencia
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'off');
             }
         });
     }
 }
 
-export default ControlsManager; // Necesario para importar la clase en otros módulos
+export default ControlsManager;
