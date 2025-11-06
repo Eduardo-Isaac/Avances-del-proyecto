@@ -316,7 +316,6 @@ body.dark-mode #speed-control {
 
 #speed-slider {
     -webkit-appearance: slider-vertical;
-    appearance: slider-vertical;
     width: 6px;
     height: 120px;
     background: rgba(255, 255, 255, 0.2);
@@ -479,7 +478,6 @@ input:checked + #dark-slider:before {
 
     #speed-slider {
         -webkit-appearance: none;
-        appearance: none;
         width: 100px;
         height: 6px;
     }
